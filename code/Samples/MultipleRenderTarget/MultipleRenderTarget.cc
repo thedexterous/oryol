@@ -48,7 +48,7 @@ MultipleRenderTargetApp::OnInit() {
     auto gfxSetup = GfxSetup::WindowMSAA4(DisplayWidth, DisplayHeight, "Oryol MRT Sample");
     gfxSetup.DefaultClearColor = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
     Gfx::Setup(gfxSetup);
-    Dbg::Setup();
+//    Dbg::Setup();
 
     // if rendering backend doesn't support MRT, drop out now
     // and show a warning during frame rendering
@@ -78,6 +78,7 @@ MultipleRenderTargetApp::OnInit() {
     this->mrtPass = Gfx::CreateResource(passSetup);
 
     // create a mesh with 2 shapes, a box and a plane
+/*    
     ShapeBuilder shapeBuilder;
     shapeBuilder.Layout
         .Add(VertexAttr::Position, VertexFormat::Float3)
@@ -135,7 +136,7 @@ MultipleRenderTargetApp::OnInit() {
     this->displayDrawState.FSTexture[DisplayTextures::Blue] = rt2;
 
     this->proj = glm::perspectiveFov(glm::radians(45.0f), float(OffscreenWidth), float(OffscreenHeight), 0.01f, 100.0f);
-
+*/
     return App::OnInit();
 }
 
@@ -158,13 +159,16 @@ MultipleRenderTargetApp::OnRunning() {
     // render the cube into the 3 MRT render targets using a single draw call,
     // the fragment shader writes 3 colors, one for each color attachment
     Gfx::BeginPass(this->mrtPass);
+    /*
     Gfx::ApplyDrawState(this->cubeDrawState);
     Gfx::ApplyUniformBlock(this->cubeParams);
     Gfx::Draw(0);
+    */
     Gfx::EndPass();
 
     // debug-visualize the 3 offscreen render targets at the bottom of the screen
     Gfx::BeginPass();
+/*
     Gfx::ApplyViewPort(0, 0, 200, 200);
     Gfx::ApplyDrawState(this->rt0DrawState);
     Gfx::Draw();
@@ -181,7 +185,7 @@ MultipleRenderTargetApp::OnRunning() {
     Gfx::ApplyDrawState(this->displayDrawState);
     Gfx::ApplyUniformBlock(this->displayParams);
     Gfx::Draw(1);
-
+*/
     Gfx::EndPass();
     Gfx::CommitFrame();
     return Gfx::QuitRequested() ? AppState::Cleanup : AppState::Running;
@@ -190,7 +194,7 @@ MultipleRenderTargetApp::OnRunning() {
 //------------------------------------------------------------------------------
 AppState::Code
 MultipleRenderTargetApp::OnCleanup() {
-    Dbg::Discard();
+//    Dbg::Discard();
     Gfx::Discard();
     return App::OnCleanup();
 }
