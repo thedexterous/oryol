@@ -82,8 +82,8 @@ emscDisplayMgr::SetupDisplay(const GfxSetup& renderSetup, const gfxPointers& ptr
         // register notification callback when canvas size changes
         double width, height;
         if (EMSCRIPTEN_RESULT_SUCCESS == emscripten_get_element_css_size(renderSetup.HtmlElement.AsCStr(), &width, &height)) {
-            this->displayAttrs.FramebufferWidth = (int) width;
-            this->displayAttrs.FramebufferHeight = (int) height;
+            this->displayAttrs.FramebufferWidth  = static_cast<int> (width  * this->displayAttrs.PixelRatio);
+            this->displayAttrs.FramebufferHeight = static_cast<int> (height * this->displayAttrs.PixelRatio);
             Log::Info("Tracked HTML element size '%s': %dx%d\n", 
                 renderSetup.HtmlElement.AsCStr(),
                 this->displayAttrs.FramebufferWidth,
@@ -172,8 +172,8 @@ EM_BOOL
 emscDisplayMgr::emscCanvasSizeChanged(int eventType, const void* reserved, void* userData) {
     int newWidth, newHeight;
     emscripten_get_canvas_element_size("#canvas", &newWidth, &newHeight);
-    self->displayAttrs.FramebufferWidth = newWidth; 
-    self->displayAttrs.FramebufferHeight = newHeight;
+    self->displayAttrs.FramebufferWidth  = static_cast<int> (newWidth  * self->displayAttrs.PixelRatio);
+    self->displayAttrs.FramebufferHeight = static_cast<int> (newHeight * self->displayAttrs.PixelRatio);
     return true;
 }
 
@@ -182,8 +182,8 @@ EM_BOOL
 emscDisplayMgr::emscWindowSizeChanged(int eventType, const EmscriptenUiEvent* uiEvent, void* userData) {
     double width, height;
     if (EMSCRIPTEN_RESULT_SUCCESS == emscripten_get_element_css_size(self->gfxSetup.HtmlElement.AsCStr(), &width, &height)) {
-        self->displayAttrs.FramebufferWidth = (int) width;
-        self->displayAttrs.FramebufferHeight = (int) height;
+        self->displayAttrs.FramebufferWidth  = static_cast<int> (width  * self->displayAttrs.PixelRatio);
+        self->displayAttrs.FramebufferHeight = static_cast<int> (height * self->displayAttrs.PixelRatio);
         emscripten_set_canvas_element_size(self->gfxSetup.HtmlElement.AsCStr(), self->displayAttrs.FramebufferWidth, self->displayAttrs.FramebufferHeight);
     }
     return true;

@@ -1012,6 +1012,8 @@ struct DisplayAttrs {
     PixelFormat::Code DepthPixelFormat = PixelFormat::DEPTHSTENCIL;
     /// number of multisample-anti-aliasing samples
     int SampleCount = 1;
+    /// pixel ratio
+    double PixelRatio = 1.;
     /// indicates windowed or fullscreen mode
     bool Windowed = true;
     /// vsync swap interval (0 means: no vsync)
@@ -1148,6 +1150,8 @@ public:
     bool HtmlTrackElementSize = false;
     /// name of the HTML element to track (default: #canvas)
     String HtmlElement = "#canvas";
+    /// HTML element pixel ratio for HiDPI devices and emulating Super-Sampled Anti-Aliasing
+    double HtmlPixelRatio = 1.0;
     /// resource pool size by resource type
     StaticArray<int,GfxResourceType::NumResourceTypes> ResourcePoolSize;
     /// resource creation throttling (max resources created async per frame)
