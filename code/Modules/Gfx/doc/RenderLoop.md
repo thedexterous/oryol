@@ -233,13 +233,15 @@ int MaxApplyDrawStatesPerFrame = GfxConfig::DefaultMaxApplyDrawStatesPerFrame;
 
 ### The special HTML5 'canvas tracking' mode
 
-There are 2 special GfxSetup members useful for HTML5 apps:
+There are 3 special GfxSetup members useful for HTML5 apps:
 
 ```cpp
 /// if true, ignore own size and instead track size of an HTML element (emscripten only)
 bool HtmlTrackElementSize = false;
 /// name of the HTML element to track (default: #canvas)
 String HtmlElement = "#canvas";
+/// physcial/logical pixel ratio for WebGL canvas to support HiDPI devices and emulate SSAA
+double HtmlPixelRatio = 1.0;
 ```
 
 If **GfxSetup::HtmlTrackElementSize** is set to true, the size members
@@ -253,3 +255,10 @@ place and adjust the rendering resolution accordingly.
 
 More information about this special behaviour can be found in 
 [this blogpost](http://floooh.github.io/2017/02/22/emsc-html.html).
+
+**GfxSetup::HtmlPixelRatio** precisely, is used to define ratio between canvas
+size and dimensions of a framebuffer. When dealing with HiDPI devices in web
+application this corresponds to a window.devicePixelRatio. It is also possible
+to multiple this value by a factor to emulate Super-Sampled Anti-Aliasing,
+for example multiplying the value by two will emulate 2x SSAA, what is useful
+for presentation of thin lines.

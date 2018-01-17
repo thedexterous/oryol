@@ -711,6 +711,7 @@ DisplayAttrs DisplayAttrs::FromTextureAttrs(const TextureAttrs& texAttrs) {
     dispAttrs.ColorPixelFormat = texAttrs.ColorFormat;
     dispAttrs.DepthPixelFormat = texAttrs.DepthFormat;
     dispAttrs.SampleCount = texAttrs.SampleCount;
+    dispAttrs.PixelRatio = 1.;
     dispAttrs.Windowed = false;
     dispAttrs.SwapInterval = 1;
     return dispAttrs;
@@ -784,6 +785,7 @@ DisplayAttrs GfxSetup::GetDisplayAttrs() const {
     attrs.ColorPixelFormat  = this->ColorFormat;
     attrs.DepthPixelFormat  = this->DepthFormat;
     attrs.SampleCount       = this->SampleCount;
+    attrs.PixelRatio        = this->HtmlPixelRatio;
     attrs.Windowed          = this->Windowed;
     attrs.WindowTitle       = this->Title;
     attrs.SwapInterval      = this->SwapInterval;
